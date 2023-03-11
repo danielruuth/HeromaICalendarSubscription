@@ -1,3 +1,7 @@
+#About
+This is a fork of the .NET work by [linusnyren](https://github.com/linusnyren/VgrICalSubscription).
+The plan is to create a nodejs equivalent.
+
 # VgrICalSubscription  
 ## Short description
 This api logs in to Heroma to get cookies and access tokens.  
