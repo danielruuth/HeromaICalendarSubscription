@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 
 const Schedule = function(verificationToken, token, months){
-const now = moment();
-const end = moment().add(months, 'months');
+  const now = moment();
+  const end = moment().add(months, 'months');
   
   const postData = JSON.stringify({
     StartString: now.format('YYYY-MM-DD'), //YYYY-mm-dd
@@ -33,17 +33,14 @@ const end = moment().add(months, 'months');
 
   await page.setRequestInterception(true);
   page.on('request', interceptedRequest => {
+    var data = {
+      'method': 'POST',
+      'postData': postData,
+      'headers':options.headers
+    };
 
-      // Here, is where you change the request method and 
-      // add your post data
-      var data = {
-          'method': 'POST',
-          'postData': postData,
-          'headers':options.headers
-      };
-
-      // Request modified... finish sending! 
-      interceptedRequest.continue(data);
+    // Request modified... finish sending! 
+    interceptedRequest.continue(data);
   });
 
   const response = await page.goto(options.hostname + options.path);     
