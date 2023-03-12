@@ -1,7 +1,7 @@
 const https = require("https");
 const fs = request("fs");
 const moment = require("moment");
-const auth = require("authenticate")
+const auth = require("auth")
 moment().format(); 
 
 // Import the express module
