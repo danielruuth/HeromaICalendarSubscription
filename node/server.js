@@ -21,43 +21,9 @@ app.get('/', (req,res)=>{
     res.send("Hello from express server.")
 })
 
-const auth = async function(username, password){
-  const authURL = 'https://heroma.vgregion.se/Webbklient/Account/Login';
-  
-  /*
-  driver.FindElement(By.XPath("//input[@id='Username']")).SendKeys(username);
-            driver.FindElement(By.XPath("//input[@id='Password']")).SendKeys(password);
-            
-            driver.FindElement(By.XPath("//button[@type='submit']")).Click();
-
-            string verificationToken = driver.FindElement(By.XPath("//input[@name='__RequestVerificationToken']")).GetAttribute("value");
-            var cookies = driver.Manage().Cookies.AllCookies;
-
-            driver.Close();
-            driver.Dispose();
-            driver.Quit();
-            string token = "";
-            foreach(var cookie in cookies)
-            {
-                token += $"{cookie.Name}={cookie.Value}; ";
-            }
-
-            if (!token.Contains("AspNetWebClientCookie_heroma.vgregion.se"))
-                throw new Exception("Unsuccessful login");
-            else
-                log.LogInformation("Succesfully retrieved tokens!");
-
-            return new CookieModel
-            {
-                Token = token,
-                VerificationToken = verificationToken
-            };
-  */
-}
-
 app.get('/ical/:user/:password/:months', (req, res) =>{
   
-  const auth = authenticate(req.params.user, req.params.password)
+  const {token, verificationToken} = await auth(req.params.user, req.params.password);
   
   const now = moment();
   const end = moment().add(months, 'months');
@@ -72,7 +38,7 @@ app.get('/ical/:user/:password/:months', (req, res) =>{
     ShowTaskWeekComments: true,
     ShowTaskWeekStaffComments: true,
     ShowWeekStaff: true,
-    __RequestVerificationToken: auth.VerificationToken //This should be VerificationToken from cookie
+    __RequestVerificationToken: verificationToken //This should be VerificationToken from cookie
   });
   
   const options = {
@@ -81,7 +47,7 @@ app.get('/ical/:user/:password/:months', (req, res) =>{
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Cookie': auth.cookie, //This should be the cookie token from loggin
+      'Cookie': token, //This should be the cookie token from loggin
     },
   };
   const request = http.request(options, (response) => {
