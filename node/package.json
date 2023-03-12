@@ -18,6 +18,7 @@
   "homepage": "https://github.com/danielruuth/VgrICalSubscription",
   "dependencies": { 
     "express": "^4", 
-    "moment": "2.29.4", 
+    "moment": "2.29.4",
+    "puppeteer": "19.7.4"
   }
 }
