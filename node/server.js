@@ -1,8 +1,8 @@
 const https = require("https");
-const fs = request("fs");
 const moment = require("moment");
-const auth = require("auth")
-const schedule = require("calendar")
+const auth = require("auth");
+const schedule = require("calendar");
+
 moment().format(); 
 
 // Import the express module
